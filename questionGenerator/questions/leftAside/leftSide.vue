@@ -1,0 +1,43 @@
+<template>
+    <div class="left-side">
+        <div>
+            <div class="title">添加题目</div>
+            <div class="question-type-list">
+                <div v-for="item in questionTypeList" :key="item.id" class="question-type" @click="handleClick(item)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </div>
+        <div></div>
+        <div></div>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive, onBeforeMount, watch, PropType } from 'vue';
+import { QuestionNameSpace } from '../../../type/questionGenerator/question';
+export default defineComponent({
+    name: 'LeftSide',
+    props: {
+        questionTypeList: {
+            type: Array as PropType<Array<QuestionNameSpace.QuestionType>>,
+            default() {
+                return []
+            }
+        }
+    },
+    setup(props, ctx) {
+        const handleClick = function(item: QuestionNameSpace.QuestionType) {
+            ctx.emit('addQuestion', item);
+        }
+
+        return {
+            handleClick
+        }
+    }
+});
+</script>
+
+<style lang="less">
+
+</style>
