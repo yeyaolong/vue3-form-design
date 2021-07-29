@@ -1,4 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from "./router/router";
+import { useMock } from './RequestUtil/mock/mock';
 
-createApp(App).mount('#app')
+// if (process.env.NODE_ENV === 'development') {
+//     useMock();
+// }
+
+
+const app = createApp(App);
+
+// app.use(router);
+
+app.mount('#app')
