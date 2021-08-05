@@ -4,13 +4,8 @@
         @click="handleEditableChange"
         v-clickoutside="handleClickoutSide"
     >
-        <!-- <form-input
-            :editable="editable"
-            type="text"
-            placeholder="请输入表单标题"
-        ></form-input> -->
         <input v-show="editable" id="questionaireTitle" v-model="title" placeholder="请输入表单标题" />
-        <div v-show="!editable">{{ questionaireTitle }}</div>
+        <div v-show="!editable">{{ title }}</div>
     </div>
 </template>
 
@@ -44,11 +39,11 @@ export default defineComponent({
 
       const state: MyState = reactive({
           title: '',
-          editable: false
+          editable: true
       });
 
       onBeforeMount(() => {
-          state.title = props.questionaireTitle;
+          state.title = props.questionaireTitle ? props.questionaireTitle : '请输入表单标题';
       });
 
       const handleEditableChange = function() {

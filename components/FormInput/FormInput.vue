@@ -19,7 +19,7 @@
       />
       <div v-show="!editable" class="preview-text">{{ valueInput }}</div>
     </div>
-    <div :class="['title-border', showTitleBoder ? '' : 'hidden']"></div>
+    <div :class="['title-border', showTitleBorder ? '' : 'hidden']"></div>
   </div>
 </template>
 
@@ -44,7 +44,7 @@ export default defineComponent({
         },
         type: {
           type: String,
-          default: 'textarea'
+          default: 'textarea' // 'text' 普通的input输入框 'textarea' 文本域
         },
         placeholder: {
           default: '请输入',
