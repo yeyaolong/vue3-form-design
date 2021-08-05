@@ -4,8 +4,8 @@
         @click="handleEditableChange"
         v-clickoutside="handleClickoutSide"
     >
-        <input v-show="editable" id="questionaireTitle" v-model="title" placeholder="请输入表单标题" />
-        <div v-show="!editable">{{ title }}</div>
+        <input v-show="state.editable" id="questionaireTitle" v-model="state.title" placeholder="请输入表单标题" />
+        <div v-show="!state.editable">{{ state.title }}</div>
     </div>
 </template>
 
@@ -38,8 +38,8 @@ export default defineComponent({
   setup(props, ctx) {
 
       const state: MyState = reactive({
-          title: '',
-          editable: true
+          title: '请输入表单标题',
+          editable: false
       });
 
       onBeforeMount(() => {
@@ -61,7 +61,8 @@ export default defineComponent({
       }
 
       return {
-          ...state,
+          state,
+          // ...state 进行解析就变的不再响应式了
           handleEditableChange,
           handleClickoutSide
       }
