@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onBeforeMount, watch, PropType } from 'vue';
-import { QuestionNameSpace } from '../../../type/questionGenerator/question';
+import { QuestionNameSpace } from '../../../../type/questionGenerator/question';
 export default defineComponent({
     name: 'LeftSide',
     props: {
@@ -39,5 +39,5 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-
+@import './leftSide.less';
 </style>
