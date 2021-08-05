@@ -15,8 +15,6 @@ type FlushList = Map<
 
 const nodeList: FlushList = new Map()
 
-let startClick: MouseEvent
-
 function createDocumentHandler(
   el: HTMLElement,
   binding: DirectiveBinding,
