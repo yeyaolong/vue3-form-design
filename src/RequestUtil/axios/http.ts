@@ -27,8 +27,8 @@ axiosInstance.interceptors.response.use(function (response) {
 export default class http {
     /**
      * 
-     * @param {String} method 接口类型 GET, PATCH, DELETE
-     * @param {String} url 接口地址
+     * @param {string} method 接口类型 GET, PATCH, DELETE
+     * @param {string} url 接口地址
      * @param {any} data 数据
      * @param {Boolean} isJSON true 请求参数是JSON格式的 false  formData
      * @returns 

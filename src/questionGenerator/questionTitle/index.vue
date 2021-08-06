@@ -12,11 +12,11 @@
 <script lang="ts">
 import Clickoutside from '../../directives/clickoutside/index';
 import FormInput from '../../../components/FormInput/FormInput.vue';
-import { defineComponent, onBeforeMount, reactive } from 'vue'
+import { defineComponent, onBeforeMount, reactive, watch } from 'vue'
 
 
 type MyState = {
-    title: String,
+    title: string,
     editable: Boolean
 }
 
@@ -47,9 +47,6 @@ export default defineComponent({
 
       const handleEditableChange = function() {
         state.editable = true;
-        console.log('aaa');
-        // (document.getElementById('questionaireTitle') as HTMLInputElement).click();
-        // (document.getElementById('questionaireTitle') as HTMLInputElement).click();
         if (state.title === '请输入表单标题') {
             state.title = '';
         }

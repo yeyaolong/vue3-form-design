@@ -4,7 +4,7 @@
       <textarea
         v-if="type === 'textarea'"
         v-show="editable"
-        v-model="valueInput" 
+        v-model="state.valueInput" 
         :style="titleTextareaStyle"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -12,12 +12,12 @@
       <input
         v-if="type === 'text'"
         v-show="editable"
-        v-model="valueInput"
+        v-model="state.valueInput"
         :placeholder="placeholder"
         :disabled="disabled"
         type="text"
       />
-      <div v-show="!editable" class="preview-text">{{ valueInput }}</div>
+      <div v-show="!editable" class="preview-text">{{ state.valueInput }}</div>
     </div>
     <div :class="['title-border', showTitleBorder ? '' : 'hidden']"></div>
   </div>
@@ -93,7 +93,7 @@ export default defineComponent({
         }
 
         return {
-          ...state,
+          state,
           handleMouseOver,
           handleMouseOut
         }

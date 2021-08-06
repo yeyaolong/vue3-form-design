@@ -1,19 +1,19 @@
 /// <reference path="./component.ts" />
 export namespace ComponentNameSpace {
     export type FormInputState = {
-        valueInput: String,
+        valueInput: string,
         showTitleBorder: Boolean,
         textAreaStyle: {
-            maxHeight: String,
-            height: String
+            maxHeight: string,
+            height: string
         }
     }
     
     export type FormInputProps = {
         disabled: Boolean,
-        value: String,
+        value: string,
         editable: Boolean,
-        type: String,
-        placeholder: String
+        type: string,
+        placeholder: string
     }
 }

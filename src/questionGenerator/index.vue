@@ -7,7 +7,23 @@
             ></left-side>
         </div>
         <div class="question-list-container">
-            <question-title></question-title>
+            <question-title
+                :questionaire-title="state.questionTitle"
+            ></question-title>
+            <question-description
+                @change="handleDescriptionChange"
+                :description="state.questionDescription"
+            ></question-description>
+        </div>
+        <div class="question-container-list">
+            <question-container
+                v-for="(item, index) in questionList"
+                :key="index"
+                :question="item"
+                :question-index="index"
+                @delete="handleDeleteQuestion"
+            >
+            </question-container>
         </div>
     </div>
 </template>
@@ -16,10 +32,18 @@
 import { defineComponent, reactive, onBeforeMount, watch } from 'vue';
 import LeftSide from './questions/leftAside/leftSide.vue';
 import QuestionTitle from './questionTitle/index.vue';
+import QuestionDescription from './questionDescription/questionDescription.vue';
+import QuestionContainer from './questions/questionContainer/questionContainer.vue';
 import { QuestionNameSpace } from '../../type/questionGenerator/question';
-
+// 图片icon
+import inputQuestionImg from '../assets/icon/填空题.png';
+import radioQuestionImg from '../assets/icon/单选题.png';
 type MyState = {
-    questionTypeList: Array<QuestionNameSpace.QuestionType>
+    questionTitle: string,
+    questionDescription: string,
+    questionTypeList: Array<QuestionNameSpace.QuestionType>,
+    questionList: Array<QuestionNameSpace.Question>,
+    loading: boolean
 }
 
 export default defineComponent({
@@ -27,12 +51,18 @@ export default defineComponent({
     props: {},
     components: {
         LeftSide,
-        QuestionTitle
+        QuestionTitle,
+        QuestionDescription,
+        QuestionContainer
     },
     setup(props, ctx) {
 
         let state: MyState = reactive({
-            questionTypeList: []
+            questionTitle: '中高风险地区旅居情况摸排', // 问卷标题
+            questionDescription: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n 3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
+            questionTypeList: [], // 可用得题目类型列表
+            questionList: [],
+            loading: false,
         });
         
         /**
@@ -43,7 +73,7 @@ export default defineComponent({
                 {
                     id: 1,
                     name: '填空题',
-                    icon: '',
+                    icon: inputQuestionImg,
                     type: 'input',
                     operation: [
                         {
@@ -94,7 +124,7 @@ export default defineComponent({
                 {
                     id: 2,
                     name: '单选题',
-                    icon: '',
+                    icon: radioQuestionImg,
                     type: 'radio',
                     operation: [
                         {
@@ -131,6 +161,12 @@ export default defineComponent({
         }
 
         getQuestionTypeList();
+        /**
+         * 修改问卷描述
+         */
+        const handleDescriptionChange = function(questionDescription: string): void {
+            state.questionDescription = questionDescription;
+        }
 
         /**
          * 新增题目
@@ -145,10 +181,29 @@ export default defineComponent({
                     break;
             }
         }
+        /**
+         * 删除题目
+         */
+        const handleDeleteQuestion = function(question: any, questionIndex: number): void {
+            state.questionList.splice(questionIndex, 1);
+        }
+
+        const initQuestionaire = function() {
+            state.questionList = [];
+            state.loading = true;
+            setTimeout(() => {
+
+            }, 1500)
+
+        }
+
+        initQuestionaire()
 
         return {
-            ...state,
-            handleAddQuestion
+            state,
+            handleDescriptionChange,
+            handleAddQuestion,
+            handleDeleteQuestion,
         }
     }
 })

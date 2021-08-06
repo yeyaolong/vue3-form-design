@@ -4,6 +4,7 @@
             <div class="title">添加题目</div>
             <div class="question-type-list">
                 <div v-for="item in questionTypeList" :key="item.id" class="question-type" @click="handleClick(item)">
+                    <img :src="item.icon" />
                     {{ item.name }}
                 </div>
             </div>
