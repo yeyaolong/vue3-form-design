@@ -4,13 +4,12 @@
         @click="handleEditableChange"
         v-clickoutside="handleClickoutSide"
     >
-        <input v-show="state.editable" id="questionaireTitle" v-model="state.title" placeholder="请输入表单标题" />
-        <div v-show="!state.editable">{{ state.title }}</div>
+        <input v-if="state.editable" maxlength="30" type="text" autofocus id="questionaireTitle" v-model="state.title" placeholder="请输入表单标题" />
+        <div v-else>{{ state.title }}</div>
     </div>
 </template>
 
 <script lang="ts">
-// import Clickoutside from 'element-plus/packages/directives/click-outside/index';
 import Clickoutside from '../../directives/clickoutside/index';
 import FormInput from '../../../components/FormInput/FormInput.vue';
 import { defineComponent, onBeforeMount, reactive } from 'vue'
@@ -48,6 +47,9 @@ export default defineComponent({
 
       const handleEditableChange = function() {
         state.editable = true;
+        console.log('aaa');
+        // (document.getElementById('questionaireTitle') as HTMLInputElement).click();
+        // (document.getElementById('questionaireTitle') as HTMLInputElement).click();
         if (state.title === '请输入表单标题') {
             state.title = '';
         }
@@ -55,10 +57,12 @@ export default defineComponent({
 
       const handleClickoutSide = function() {
         state.editable = false;
+        
         if (!state.title) {
             state.title = '请输入表单标题';
         }
       }
+
 
       return {
           state,
