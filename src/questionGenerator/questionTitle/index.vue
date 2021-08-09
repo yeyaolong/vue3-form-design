@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import Clickoutside from '../../directives/clickoutside/index';
-import FormInput from '../../../components/FormInput/FormInput.vue';
+import Clickoutside from '@directives/clickoutside/index';
+import FormInput from '@components/FormInput/FormInput.vue';
 import { defineComponent, onBeforeMount, reactive, watch } from 'vue'
 
 

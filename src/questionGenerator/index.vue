@@ -2,7 +2,7 @@
     <div class="question-generator">
         <div class="left-side-content">
             <left-side
-                :question-type-list="questionTypeList"
+                :question-type-list="state.questionTypeList"
                 @addQuestion="handleAddQuestion"
             ></left-side>
         </div>
@@ -13,18 +13,21 @@
             <question-description
                 @change="handleDescriptionChange"
                 :description="state.questionDescription"
+                :cols="20"
             ></question-description>
+            <div class="question-container-list">
+                <question-container
+                    v-for="(item, index) in state.questionList"
+                    :key="index"
+                    :question="item"
+                    :question-type-list="state.questionTypeList"
+                    :question-index="index"
+                    @delete="handleDeleteQuestion"
+                >
+                </question-container>
+            </div>
         </div>
-        <div class="question-container-list">
-            <question-container
-                v-for="(item, index) in questionList"
-                :key="index"
-                :question="item"
-                :question-index="index"
-                @delete="handleDeleteQuestion"
-            >
-            </question-container>
-        </div>
+        
     </div>
 </template>
 
@@ -34,15 +37,19 @@ import LeftSide from './questions/leftAside/leftSide.vue';
 import QuestionTitle from './questionTitle/index.vue';
 import QuestionDescription from './questionDescription/questionDescription.vue';
 import QuestionContainer from './questions/questionContainer/questionContainer.vue';
-import { QuestionNameSpace } from '../../type/questionGenerator/question';
 // 图片icon
-import inputQuestionImg from '../assets/icon/填空题.png';
-import radioQuestionImg from '../assets/icon/单选题.png';
+import inputQuestionImg from '@assets/icon/填空题.png';
+import radioQuestionImg from '@assets/icon/单选题.png';
+
+type QuestionTypeList = {
+    [key: string]:  QuestionNameSpace.QuestionType
+}
+
 type MyState = {
     questionTitle: string,
     questionDescription: string,
-    questionTypeList: Array<QuestionNameSpace.QuestionType>,
-    questionList: Array<QuestionNameSpace.Question>,
+    questionTypeList: QuestionTypeList,
+    questionList: Array<QuestionNameSpace.Question | QuestionNameSpace.RadioQuestion | QuestionNameSpace.InputQuestion>,
     loading: boolean
 }
 
@@ -59,8 +66,8 @@ export default defineComponent({
 
         let state: MyState = reactive({
             questionTitle: '中高风险地区旅居情况摸排', // 问卷标题
-            questionDescription: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n 3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
-            questionTypeList: [], // 可用得题目类型列表
+            questionDescription: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
+            questionTypeList: {}, // 可用得题目类型列表
             questionList: [],
             loading: false,
         });
@@ -69,95 +76,80 @@ export default defineComponent({
          * 根据id获取题目列表
          */
         const getQuestionTypeList = function() {
-            state.questionTypeList = [
-                {
+            state.questionTypeList = {
+                'input': {
                     id: 1,
                     name: '填空题',
                     icon: inputQuestionImg,
                     type: 'input',
-                    operation: [
-                        {
-                        name: '添加文件/图片(标题)'
-                        },
-                        {
-                        name: '添加题目说明'
-                        },
-                        {
-                        name: '将此标题添加为常用题'
-                        },
-                        {
-                        name: '复制题目'
-                        }
-                    ], // 更多操作
                     deletable: true, // 是否可以删除
                     empty: false, // false 必填 true 非必填
-                    typeList: [
+                    subtypeList: [
                         {
-                        name: '单行填空'
+                            name: '单行填空',
+                            value: '1'
                         },
                         {
-                        name: '多行填空'
+                            name: '多行填空',
+                            value: '2'
                         },
                         {
-                        name: '电子签名'
+                            name: '电子签名',
+                            value: '3'
                         },
                         {
-                        name: '手机号'
+                            name: '手机号',
+                            value: '4'
                         },
                         {
-                        name: '数字'
+                            name: '数字',
+                            value: '5'
                         },
                         {
-                        name: '地址'
+                            name: '地址',
+                            value: '6'
                         },
                         {
-                        name: '日期'
+                            name: '日期',
+                            value: '7'
                         },
                         {
-                        name: '时间'
+                            name: '时间',
+                            value: '8'
                         },
                         {
-                        name: '扫码输入'
+                            name: '扫码输入',
+                            value: '9'
                         }
-                    ], // 类型列表
+                    ], // 二级类型列表
                 },
-                {
+                'radio': {
                     id: 2,
                     name: '单选题',
                     icon: radioQuestionImg,
                     type: 'radio',
-                    operation: [
-                        {
-                        name: '添加文件/图片(标题)'
-                        },
-                        {
-                        name: '添加题目说明'
-                        },
-                        {
-                        name: '将此标题添加为常用题'
-                        },
-                        {
-                        name: '复制题目'
-                        }
-                    ], // 更多操作
                     deletable: true, // 是否可以删除
                     empty: false, // false 必填 true 非必填
-                    typeList: [
+                    subtypeList: [
                         {
-                        name: '单选题'
+                            name: '单选题',
+                            value: '1'
                         },
                         {
-                        name: '多选题'
+                            name: '多选题',
+                            value: '2'
                         },
                         {
-                        name: '下拉框'
+                            name: '下拉框',
+                            value: '3'
                         },
                         {
-                        name: '多段选择'
+                            name: '多段选择',
+                            value: '4'
                         }
-                    ], // 类型列表
+                    ], // 二级类型列表
                 }
-            ]
+            }
         }
 
         getQuestionTypeList();
@@ -192,7 +184,27 @@ export default defineComponent({
             state.questionList = [];
             state.loading = true;
             setTimeout(() => {
-
+                state.questionList = [
+                    {
+                        typeName: '单选题',
+                        type: 'radio', // 一级类型
+                        subtype: 'radio',
+                        subtypeName: '单选题',// 二级类型
+                        title: '',
+                        selectList: [
+                            {
+                                name: '男',
+                                value: 'male'
+                            },
+                            {
+                                name: '女',
+                                value: 'female'
+                            }
+                        ],
+                        deletable: true,
+                        empty: false
+                    }
+                ]
             }, 1500)
 
         }

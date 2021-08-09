@@ -7,6 +7,7 @@
         <form-input
             v-model:value="state.questionaireDescription"
             :editable="state.editable"
+            :cols="cols"
             type="textarea"
             placeholder="点击设置描述"
             :disabled="false"
@@ -16,8 +17,8 @@
 
 <script lang="ts">
 import { defineComponent, onBeforeMount, reactive, watch } from 'vue'
-import Clickoutside from '../../directives/clickoutside/index';
-import FormInput from '../../../components/FormInput/FormInput.vue';
+import Clickoutside from '@directives/clickoutside/index';
+import FormInput from '@components/FormInput/FormInput.vue';
 type MyState = {
     editable: boolean,
     questionaireDescription: string,
@@ -36,6 +37,10 @@ export default defineComponent({
       description: {
           type: String,
           default: ''
+      },
+      cols: {
+          type: Number,
+          default: 20
       }
   },
   setup(props, ctx) {
@@ -44,7 +49,7 @@ export default defineComponent({
           questionaireDescription: '',
           textareaStyle: {
               maxHeight: '9.0072e+15px',
-              height: '20px'
+              height: props.cols + 'px'
           }
       });
 
@@ -69,7 +74,7 @@ export default defineComponent({
             let reg = /\n/g;
             let matchArray = newVal.match(reg);
             let wrapCount = matchArray ? matchArray.length : 0;
-            state.textareaStyle.height = 20 + wrapCount * 18 + 'px';
+            state.textareaStyle.height = props.cols + wrapCount * 18 + 'px';
 
             ctx.emit('change', newVal);
       })

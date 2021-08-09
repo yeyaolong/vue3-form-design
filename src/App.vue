@@ -12,7 +12,9 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="less">
+@import './less/common.less';
+@import './less/issue.less';
 body {
   padding: 0;
   margin: 0;

@@ -1,9 +1,11 @@
-export namespace QuestionNameSpace {
+// export namespace QuestionNameSpace {
+declare namespace QuestionNameSpace { // 直接放到全局，省的每次都要引用
     /**
      * 问题类型能进行的操作
      */
     type Operation = {
-        name: string
+        name: string,
+        value: string
     }
 
     /**
@@ -19,10 +21,9 @@ export namespace QuestionNameSpace {
         name: string,
         icon: string,
         type: string,
-        operation: Array<Operation>, // 问题类型能进行的操作
         deletable: Boolean,
         empty: Boolean,
-        typeList: Array<QuestionSubType> // 问题类型包含的子类型列表
+        subtypeList: Array<QuestionSubType> // 问题类型包含的子类型列表
     }
     /**
      * 问卷问题
@@ -30,12 +31,12 @@ export namespace QuestionNameSpace {
     export interface Question {
         typeName: string;
         type: string;
+        subtype: string // 子类型
+        subtypeName: string, // 子类型名称
         title: string;
-        operation: Array<SelectItem>, // 更多操作
         deletable: boolean, // 是否可删除
         empty: boolean, // false 必填 true 非必填
-        typeList: Array<SelectItem>
-
+        
     }
     /**
      * 问卷问题-单选题
@@ -50,3 +51,4 @@ export namespace QuestionNameSpace {
 
     }
 }
+

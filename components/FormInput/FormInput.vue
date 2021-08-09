@@ -4,8 +4,9 @@
       <textarea
         v-if="type === 'textarea'"
         v-show="editable"
-        v-model="state.valueInput" 
-        :style="titleTextareaStyle"
+        v-model="state.valueInput"
+        :cols="cols"
+        :style="state.titleTextareaStyle"
         :placeholder="placeholder"
         :disabled="disabled"
       ></textarea>
@@ -19,7 +20,7 @@
       />
       <div v-show="!editable" class="preview-text">{{ state.valueInput }}</div>
     </div>
-    <div :class="['title-border', showTitleBorder ? '' : 'hidden']"></div>
+    <div :class="['title-border', state.showTitleBorder ? '' : 'hidden']"></div>
   </div>
 </template>
 
@@ -49,6 +50,10 @@ export default defineComponent({
         placeholder: {
           default: '请输入',
           type: String
+        },
+        cols:{
+          type: Number,
+          default: 20
         }
     },  
     setup(props, ctx) {
@@ -57,7 +62,7 @@ export default defineComponent({
             showTitleBorder: false,
             titleTextareaStyle: {
                 maxHeight: '9.0072e+15px',
-                height: '20px'
+                height: props.cols + 'px'
             }
         });
 

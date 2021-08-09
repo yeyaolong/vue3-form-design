@@ -1,0 +1,35 @@
+.radio-question {
+    font-size: 16px;
+    
+    .select-option:not(:nth-child(1)) {
+        margin-top: 24px;
+    }
+    .select-option {
+        text-align: left;
+        & > input {
+            margin-right: 9px;
+        }
+        .radio-input-container {
+            width: 90%;
+            display: inline-block;
+        }
+        .delete {
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 12px;
+            vertical-align: bottom;
+            img {
+                width: 16px;
+            }
+        }
+    }
+    .option-operation {
+        color: #106cbd;
+        margin-top: 12px;
+        text-align: left;
+        .text-btn {
+            display: inline-block;
+            cursor: pointer;
+        }
+    }
+}
