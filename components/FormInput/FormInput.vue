@@ -20,7 +20,7 @@
       />
       <div v-show="!editable" class="preview-text">{{ state.valueInput }}</div>
     </div>
-    <div :class="['title-border', state.showTitleBorder ? '' : 'hidden']"></div>
+    <div :class="['vertical-divider', state.showTitleBorder ? '' : 'hidden']"></div>
   </div>
 </template>
 

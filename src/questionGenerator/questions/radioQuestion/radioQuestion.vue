@@ -4,7 +4,7 @@
             <span class="issue-index">{{ questionIndex + 1 }}.</span>
             <div class="issue-content">
                 <textarea
-                    v-show="editable"
+                    v-if="editable"
                     v-model="state.questionInfo.title" 
                     :style="titleTextareaStyle"
                     placeholder="请输入问题"
@@ -13,7 +13,7 @@
                 <div v-show="!editable">{{ state.questionInfo.title }}</div>
             </div>
         </div>
-        <div :class="['title-border', state.showTitleBorder ? '' : 'hidden']"></div>
+        <div :class="['vertical-divider', state.showTitleBorder ? '' : 'hidden']"></div>
         <div class="issue-result">
             <div class="select-option-list">
                 <div v-for="(item, index) in state.questionInfo.selectList" :key="index" class="select-option">

@@ -82,7 +82,6 @@ export default defineComponent({
                     name: '填空题',
                     icon: inputQuestionImg,
                     type: 'input',
-                    deletable: true, // 是否可以删除
                     empty: false, // false 必填 true 非必填
                     subtypeList: [
                         {
@@ -128,7 +127,6 @@ export default defineComponent({
                     name: '单选题',
                     icon: radioQuestionImg,
                     type: 'radio',
-                    deletable: true, // 是否可以删除
                     empty: false, // false 必填 true 非必填
                     subtypeList: [
                         {
@@ -201,7 +199,6 @@ export default defineComponent({
                                 value: 'female'
                             }
                         ],
-                        deletable: true,
                         empty: false
                     }
                 ]

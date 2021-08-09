@@ -213,7 +213,6 @@ const useMock = function() {
                           name: '复制题目'
                         }
                       ], // 更多操作
-                      deletable: true, // 是否可以删除
                       empty: true, // false 必填 true 非必填
                       typeList: [
                         {
@@ -266,7 +265,6 @@ const useMock = function() {
                           name: '复制题目'
                         }
                       ], // 更多操作
-                      deletable: true, // 是否可以删除
                       empty: true, // false 必填 true 非必填
                       typeList: [
                         {

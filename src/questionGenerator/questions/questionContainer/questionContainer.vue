@@ -16,7 +16,7 @@
             :question="question"
           ></radio-question>
           <div class="question-foot"  v-show="state.editable">
-            <span>{{ question.subTypeName }}</span>
+            <span>{{ question.subtypeName }}</span>
             |
             <div class="empty">
               <label for="noEmpty">必填</label><input type="checkbox" id="noEmpty"/>
@@ -50,7 +50,9 @@ type MyState = {
 }
 
 type MyProps = {
-  questionTypeList: QuestionTypeList
+  questionTypeList: QuestionTypeList,
+  question: QuestionNameSpace.Question,
+  questionIndex: number
 }
 
 export default defineComponent({
@@ -100,7 +102,7 @@ export default defineComponent({
      * 删除题目
      */
     const handleDelete = function() {
-      
+      ctx.emit('delete', props.question, props.questionIndex)
     }
     /**
      * 对题目的更多操作

@@ -21,7 +21,6 @@ declare namespace QuestionNameSpace { // 直接放到全局，省的每次都要
         name: string,
         icon: string,
         type: string,
-        deletable: Boolean,
         empty: Boolean,
         subtypeList: Array<QuestionSubType> // 问题类型包含的子类型列表
     }
@@ -34,9 +33,7 @@ declare namespace QuestionNameSpace { // 直接放到全局，省的每次都要
         subtype: string // 子类型
         subtypeName: string, // 子类型名称
         title: string;
-        deletable: boolean, // 是否可删除
         empty: boolean, // false 必填 true 非必填
-        
     }
     /**
      * 问卷问题-单选题
