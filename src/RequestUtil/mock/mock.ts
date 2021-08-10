@@ -1,5 +1,5 @@
 let Mock = require('mockjs');
-
+// const Mock = require('mockjs');
 const useMock = function() {
     Mock.setup({
         timeout: '200-600'
