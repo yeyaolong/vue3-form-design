@@ -37,9 +37,8 @@ import LeftSide from './questions/leftAside/leftSide.vue';
 import QuestionTitle from './questionTitle/index.vue';
 import QuestionDescription from './questionDescription/questionDescription.vue';
 import QuestionContainer from './questions/questionContainer/questionContainer.vue';
-// 图片icon
-import inputQuestionImg from '@assets/icon/填空题.png';
-import radioQuestionImg from '@assets/icon/单选题.png';
+import { getQuestionTypeList } from '@/RequestUtil/api/question';
+
 
 type QuestionTypeList = {
     [key: string]:  QuestionNameSpace.QuestionType
@@ -75,82 +74,19 @@ export default defineComponent({
         /**
          * 根据id获取题目列表
          */
-        const getQuestionTypeList = function() {
-            state.questionTypeList = {
-                'input': {
-                    id: 1,
-                    name: '填空题',
-                    icon: inputQuestionImg,
-                    type: 'input',
-                    empty: false, // false 必填 true 非必填
-                    subtypeList: [
-                        {
-                            name: '单行填空',
-                            value: '1'
-                        },
-                        {
-                            name: '多行填空',
-                            value: '2'
-                        },
-                        {
-                            name: '电子签名',
-                            value: '3'
-                        },
-                        {
-                            name: '手机号',
-                            value: '4'
-                        },
-                        {
-                            name: '数字',
-                            value: '5'
-                        },
-                        {
-                            name: '地址',
-                            value: '6'
-                        },
-                        {
-                            name: '日期',
-                            value: '7'
-                        },
-                        {
-                            name: '时间',
-                            value: '8'
-                        },
-                        {
-                            name: '扫码输入',
-                            value: '9'
-                        }
-                    ], // 二级类型列表
-                },
-                'radio': {
-                    id: 2,
-                    name: '单选题',
-                    icon: radioQuestionImg,
-                    type: 'radio',
-                    empty: false, // false 必填 true 非必填
-                    subtypeList: [
-                        {
-                            name: '单选题',
-                            value: '1'
-                        },
-                        {
-                            name: '多选题',
-                            value: '2'
-                        },
-                        {
-                            name: '下拉框',
-                            value: '3'
-                        },
-                        {
-                            name: '多段选择',
-                            value: '4'
-                        }
-                    ], // 二级类型列表
+        const getQuestionTypeListFn = function() {
+            const params = {}
+            getQuestionTypeList(params).then((res: any) => {
+                if (res.code === 0) {
+                    state.questionTypeList = res.data;
+                } else {
+
                 }
-            }
+            })
+            
         }
 
-        getQuestionTypeList();
+        getQuestionTypeListFn();
         /**
          * 修改问卷描述
          */

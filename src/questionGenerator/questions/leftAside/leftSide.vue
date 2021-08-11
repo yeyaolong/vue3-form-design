@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onBeforeMount, watch, PropType, onMounted } from 'vue';
-import { QuestionNameSpace } from '../../../../type/questionGenerator/question';
+import { QuestionNameSpace } from '@type/questionGenerator/question';
 
 type QuestionTypeList = {
     [key: string]:  QuestionNameSpace.QuestionType
