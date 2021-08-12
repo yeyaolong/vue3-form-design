@@ -37,8 +37,9 @@ import LeftSide from './questions/leftAside/leftSide.vue';
 import QuestionTitle from './questionTitle/index.vue';
 import QuestionDescription from './questionDescription/questionDescription.vue';
 import QuestionContainer from './questions/questionContainer/questionContainer.vue';
-import { getQuestionTypeList } from '@/RequestUtil/api/question';
-
+import { getQuestionTypeList, getQuestionList } from '@/RequestUtil/api/question';
+/// <reference path="@type/question.d.ts" />
+/// <reference path="@type/question.d.ts" />
 
 type QuestionTypeList = {
     [key: string]:  QuestionNameSpace.QuestionType
@@ -64,8 +65,10 @@ export default defineComponent({
     setup(props, ctx) {
 
         let state: MyState = reactive({
-            questionTitle: '中高风险地区旅居情况摸排', // 问卷标题
-            questionDescription: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
+            // questionTitle: '中高风险地区旅居情况摸排', // 问卷标题
+            // questionDescription: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
+            questionTitle: '', // 问卷标题
+            questionDescription: '', // 问卷描述
             questionTypeList: {}, // 可用得题目类型列表
             questionList: [],
             loading: false,
@@ -114,31 +117,47 @@ export default defineComponent({
             state.questionList.splice(questionIndex, 1);
         }
 
+        const getQuestionListFn = function() {
+            getQuestionList().then((res: ApiNameSpace.QuestionListApi) => {
+                if (res.code === 0) {
+                    const { questionTitle, description, questionList } = res.data;
+                    state.questionTitle = questionTitle;
+                    state.questionDescription = description;
+                    state.questionList = questionList;
+
+                    // state.questionList = [
+                    //     {
+                    //         typeName: '单选题',
+                    //         type: 'radio', // 一级类型
+                    //         subtype: 'radio',
+                    //         subtypeName: '单选题',// 二级类型
+                    //         title: '',
+                    //         selectList: [
+                    //             {
+                    //                 name: '男',
+                    //                 value: 'male'
+                    //             },
+                    //             {
+                    //                 name: '女',
+                    //                 value: 'female'
+                    //             }
+                    //         ],
+                    //         empty: false
+                    //     }
+                    // ]
+                } else {
+                    throw new Error(res.message);
+                }
+            }).catch((error: Error) => {
+                throw error;
+            })
+        }
+
         const initQuestionaire = function() {
             state.questionList = [];
             state.loading = true;
-            setTimeout(() => {
-                state.questionList = [
-                    {
-                        typeName: '单选题',
-                        type: 'radio', // 一级类型
-                        subtype: 'radio',
-                        subtypeName: '单选题',// 二级类型
-                        title: '',
-                        selectList: [
-                            {
-                                name: '男',
-                                value: 'male'
-                            },
-                            {
-                                name: '女',
-                                value: 'female'
-                            }
-                        ],
-                        empty: false
-                    }
-                ]
-            }, 1500)
+
+            getQuestionList();
 
         }
 

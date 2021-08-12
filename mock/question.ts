@@ -83,8 +83,43 @@ export default [
                       }
                   ], // 二级类型列表
               }
-            }
+            },
+            message: '操作成功'
           };
         },
+    },
+    {
+        url: '/api/getQuestionList',
+        method: 'get',
+        response: () => {
+            return {
+                code: 0,
+                data: {
+                    questionTitle: '中高风险地区旅居情况摸排', // 问卷标题
+                    description: '1. 紧急摸排自6月起停留、途径南京禄口机场、湖南省张家界景区的居民；\r\n2. 请各单位与x月x日前完成填写；\r\n3. 有旅居记录人员如出现发热、腹泻、嗅觉丧失等情况，请联系网格员吴xx  13799099000', // 问卷描述
+                    questionList: [
+                        {
+                            typeName: '单选题',
+                            type: 'radio', // 一级类型
+                            subtype: 'radio',
+                            subtypeName: '单选题',// 二级类型
+                            title: '',
+                            selectList: [
+                                {
+                                    name: '男',
+                                    value: 'male'
+                                },
+                                {
+                                    name: '女',
+                                    value: 'female'
+                                }
+                            ],
+                            empty: false
+                        }
+                    ]
+                },
+                message: '操作成功'
+            }
+        }
     }
 ] as MockMethod[];
